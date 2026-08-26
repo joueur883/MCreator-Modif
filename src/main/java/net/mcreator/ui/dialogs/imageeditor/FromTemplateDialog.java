@@ -22,6 +22,7 @@ import net.mcreator.io.ResourcePointer;
 import net.mcreator.ui.MCreator;
 import net.mcreator.ui.component.JColor;
 import net.mcreator.ui.component.util.ComponentUtils;
+import net.mcreator.ui.component.util.ListUtil;
 import net.mcreator.ui.component.util.PanelUtils;
 import net.mcreator.ui.dialogs.MCreatorDialog;
 import net.mcreator.ui.dialogs.TextureSelectorDialog;
@@ -53,7 +54,7 @@ public class FromTemplateDialog extends MCreatorDialog {
 
 	private static final Logger LOG = LogManager.getLogger("From Template Dialog");
 
-	private static final String[] templateList = new String[] { "Random", "Sword", "Pickaxe", "Axe", "Shovel", "Hoe",
+	private static final String[] templateList = new String[] { "Random", "Sword", "Pickaxe", "Axe", "Spear", "Shovel", "Hoe",
 			"Shears", "Music disc", "Drinkable potion", "Splash potion", "Lingering potion", "Ore", "Block", "Gem",
 			"Dye", "Spawn egg" };
 
@@ -337,6 +338,19 @@ public class FromTemplateDialog extends MCreatorDialog {
 							.collect(Collectors.toList())));
 			cbs2.setSelectedItem(ListUtils.getRandomItem(
 					templatesSorted.stream().filter(e -> e.toString().equals("tool_axe"))
+							.collect(Collectors.toList())));
+			cbs3.setSelectedItem(noimage);
+			cbs4.setSelectedItem(noimage);
+			col1.setColor(ListUtils.getRandomItem(presetColors));
+			type1.setSelected(Math.random() < 0.4);
+			ang1.setValue(0);
+			break;
+		case "Spear":
+			cbs.setSelectedItem(ListUtils.getRandomItem(
+					templatesSorted.stream().filter(e -> e.toString().equals("tool_base_stick"))
+							.collect(Collectors.toList())));
+			cbs2.setSelectedItem(ListUtils.getRandomItem(
+					templatesSorted.stream().filter(e -> e.toString().equals("tool_spear"))
 							.collect(Collectors.toList())));
 			cbs3.setSelectedItem(noimage);
 			cbs4.setSelectedItem(noimage);
