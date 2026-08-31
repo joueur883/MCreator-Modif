@@ -40,11 +40,16 @@ import javax.annotation.Nullable;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.*;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("unused") public class Armor extends GeneratableElement implements IItem, ITabContainedElement {
+
+	private static final Logger LOG = LogManager.getLogger(Armor.class);
 
 	public boolean enableHelmet;
 	@TextureReference(TextureType.ITEM) @NonNullIf("enableHelmet") public TextureHolder textureHelmet;
@@ -62,6 +67,7 @@ import java.util.stream.Collectors;
 
 	@ModElementReference public List<TabEntry> creativeTabs;
 	@TextureReference(value = TextureType.ARMOR, files = { "%s_layer_1", "%s_layer_2" }) public String armorTextureFile;
+	@TextureReference(TextureType.ARMOR) public String horseArmorTextureFile;
 
 	public String helmetName;
 	public String bodyName;
@@ -415,4 +421,16 @@ import java.util.stream.Collectors;
 		return this.repairItems.stream().map(MappableElement::getUnmappedValue).collect(Collectors.toList());
 	}
 
+	@Override public void finalizeModElementGeneration() {
+		try {
+			File texturePath = new File(
+					getModElement().getFolderManager().getTexturesFolder(TextureType.OTHER) + File.separator
+						+ horseArmorTextureFile + ".png");
+			File newLocation = new File(getModElement().getFolderManager().getTexturesFolder(TextureType.ARMOR),
+					"entity/horse/armor/" + "horse_armor_" + getModElement().getRegistryName() + ".png");
+			FileIO.copyFile(texturePath, newLocation);
+		} catch (Exception e) {
+			LOG.error("Failed to copy horse armor texture", e);
+		}
+	}
 }

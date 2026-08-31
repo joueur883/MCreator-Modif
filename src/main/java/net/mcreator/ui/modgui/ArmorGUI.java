@@ -128,11 +128,14 @@ public class ArmorGUI extends ModElementGUI<Armor> {
 	private final VComboBox<String> bootsModelPartR = new SearchableComboBox<>();
 
 	private TextureComboBox armorTextureFile;
+	private TextureComboBox horseArmorTextureFile;
 
 	private final JCheckBox enableHelmet = L10N.checkbox("elementgui.armor.armor_helmet");
 	private final JCheckBox enableBody = L10N.checkbox("elementgui.armor.armor_chestplate");
 	private final JCheckBox enableLeggings = L10N.checkbox("elementgui.armor.armor_leggings");
-	private final JCheckBox enableBoots = L10N.checkbox("elementgui.armor.armor_boots");
+	private final JCheckBox enableBoots = L10N.checkbox("elementgui.common.enable");
+
+	private final JCheckBox isHorseArmor = L10N.checkbox("elementgui.common.enable");
 
 	private TextureComboBox helmetModelTexture;
 	private TextureComboBox bodyModelTexture;
@@ -280,6 +283,9 @@ public class ArmorGUI extends ModElementGUI<Armor> {
 				"elementgui.armor.armor_needs_texture");
 		armorTextureFile.setAddPNGExtension(false);
 
+		horseArmorTextureFile = new TextureComboBox(mcreator, TextureType.OTHER, true);
+		horseArmorTextureFile.setAddPNGExtension(false);
+
 		helmetModelTexture = new TextureComboBox(mcreator, TextureType.ENTITY, true, "From armor");
 		bodyModelTexture = new TextureComboBox(mcreator, TextureType.ENTITY, true, "From armor");
 		leggingsModelTexture = new TextureComboBox(mcreator, TextureType.ENTITY, true, "From armor");
@@ -339,6 +345,7 @@ public class ArmorGUI extends ModElementGUI<Armor> {
 		ComponentUtils.deriveFont(bootsName, 16);
 
 		ComponentUtils.deriveFont(armorTextureFile, 16);
+		ComponentUtils.deriveFont(horseArmorTextureFile, 16);
 
 		JPanel destal = new JPanel();
 		destal.setLayout(new BoxLayout(destal, BoxLayout.Y_AXIS));
@@ -600,6 +607,7 @@ public class ArmorGUI extends ModElementGUI<Armor> {
 		});
 
 		armorTextureFile.getComboBox().addActionListener(_ -> updateArmorTexturePreview());
+		horseArmorTextureFile.getComboBox().addActionListener(_ -> updateArmorTexturePreview());
 
 		JPanel sbbp22 = new JPanel();
 		sbbp22.setOpaque(false);
@@ -616,11 +624,15 @@ public class ArmorGUI extends ModElementGUI<Armor> {
 		pane2.setOpaque(false);
 		pane2.add("Center", PanelUtils.totalCenterInPanel(sbbp22));
 
-		JPanel enderpanel = new JPanel(new GridLayout(10, 2, 20, 2));
+		JPanel enderpanel = new JPanel(new GridLayout(11, 2, 20, 2));
 
 		enderpanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("armor/armor_layer_texture"),
 				L10N.label("elementgui.armor.layer_texture")));
 		enderpanel.add(armorTextureFile);
+
+		enderpanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("armor/is_horse_armor"),
+				L10N.label("elementgui.armor.is_hose_armor")));
+		enderpanel.add(isHorseArmor);
 
 		enderpanel.add(
 				HelpUtils.wrapWithHelpButton(this.withEntry("item/rarity"), L10N.label("elementgui.common.rarity")));
@@ -874,9 +886,11 @@ public class ArmorGUI extends ModElementGUI<Armor> {
 	}
 
 	private void updateArmorTexturePreview() {
-		String textureName = armorTextureFile.getTextureName();
-		File[] armorTextures = mcreator.getFolderManager().getArmorTextureFilesForName(textureName);
-		if (!textureName.isBlank() && armorTextures[0].isFile() && armorTextures[1].isFile()) {
+		String textureName = isHorseArmor.isSelected() ? horseArmorTextureFile.getTextureName()  : armorTextureFile.getTextureName();
+		File[] armorTextures = isHorseArmor.isSelected()
+				? mcreator.getFolderManager().getHorseArmorTextureFilesForName(textureName)
+				: mcreator.getFolderManager().getArmorTextureFilesForName(textureName);
+		if (!isHorseArmor.isSelected() && !textureName.isBlank() && armorTextures[0].isFile() && armorTextures[1].isFile()) {
 			ImageIcon bg1 = new ImageIcon(
 					ImageUtils.resize(new ImageIcon(armorTextures[0].getAbsolutePath()).getImage(),
 							64 * ARMOR_TEXTURE_SIZE_FACTOR, 32 * ARMOR_TEXTURE_SIZE_FACTOR));
@@ -887,6 +901,12 @@ public class ArmorGUI extends ModElementGUI<Armor> {
 			ImageIcon front2 = new ImageIcon(MinecraftImageGenerator.Preview.generateArmorPreviewFrame2());
 			clo1.setIcon(ImageUtils.drawOver(bg1, front1));
 			clo2.setIcon(ImageUtils.drawOver(bg2, front2));
+		} else if (isHorseArmor.isSelected() && !textureName.isBlank() && armorTextures[0].isFile()) {
+			ImageIcon bg1 = new ImageIcon(
+					ImageUtils.resize(new ImageIcon(armorTextures[0].getAbsolutePath()).getImage(),
+							64 * ARMOR_TEXTURE_SIZE_FACTOR, 32 * ARMOR_TEXTURE_SIZE_FACTOR));
+			clo1.setIcon(bg1);
+			clo2.setIcon(null);
 		} else {
 			clo1.setIcon(new ImageIcon(MinecraftImageGenerator.Preview.generateArmorPreviewFrame1()));
 			clo2.setIcon(new ImageIcon(MinecraftImageGenerator.Preview.generateArmorPreviewFrame2()));
@@ -1125,5 +1145,4 @@ public class ArmorGUI extends ModElementGUI<Armor> {
 	@Override public @Nullable URI contextURL() throws URISyntaxException {
 		return new URI(MCreatorApplication.SERVER_DOMAIN + "/wiki/how-make-armor");
 	}
-
 }
