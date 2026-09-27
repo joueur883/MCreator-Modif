@@ -130,11 +130,18 @@ public class Theme {
 		}
 
 		if (!disableMCreatorOverrides) {
-			overrides.put("Button.arc", "0");
-			overrides.put("Component.arc", "0");
-			overrides.put("CheckBox.arc", "0");
-			overrides.put("Spinner.arc", "0");
-			overrides.put("ProgressBar.arc", "0");
+			overrides.put("Button.arc", "10");
+			overrides.put("Component.arc", "10");
+			overrides.put("CheckBox.arc", "5");
+			overrides.put("Spinner.arc", "10");
+			overrides.put("ProgressBar.arc", "10");
+			overrides.put("MenuItem.arc", "10");
+			overrides.put("TextField.arc", "10");
+			overrides.put("TextComponent.arc", "10");
+			overrides.put("ComboBox.arc", "10");
+			overrides.put("Panel.arc", "10");
+			overrides.put("ComboBox.selectionArc", "10");
+			overrides.put("MenuItem.selectionArc", "10");
 
 			overrides.put("Component.focusWidth", "0");
 			overrides.put("Component.innerFocusWidth", "0");

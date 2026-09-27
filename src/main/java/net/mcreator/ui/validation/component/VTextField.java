@@ -97,7 +97,7 @@ public class VTextField extends JTextField implements IValidable, IOptionalValue
 
 		if (mouseInInfoZone) {
 			g.setColor(Theme.current().getAltBackgroundColor());
-			g.fillRect(1, 1, getWidth() - 1, 13);
+			g.fillRoundRect(1, 1, getWidth() - 1, 13, 2, 2);
 			g.setFont(getFont().deriveFont(10.0f));
 			g.setColor(Theme.current().getForegroundColor());
 			String message = L10N.t("validators.input_field_is_validated");
@@ -110,7 +110,7 @@ public class VTextField extends JTextField implements IValidable, IOptionalValue
 		}
 
 		g.setColor(Theme.current().getAltBackgroundColor());
-		g.fillRect(getWidth() - 14, 1, 13, 13);
+		g.fillRoundRect(getWidth() - 14, 1, 13, 13, 10, 10);
 
 		INFO_ICON.paintIcon(this, g, getWidth() - 14, 1);
 
@@ -127,7 +127,7 @@ public class VTextField extends JTextField implements IValidable, IOptionalValue
 			if (currentValidationResult.type() != ValidationResult.Type.PASSED) {
 				Color old = g.getColor();
 				g.setColor(ColorUtils.applyAlpha(old, 40));
-				g.fillRect(1, 1, getWidth() - 2, getHeight() - 2);
+				g.fillRoundRect(1, 1, getWidth() - 2, getHeight() - 2, 10, 10);
 			}
 		}
 	}
