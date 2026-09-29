@@ -57,7 +57,6 @@ public class ThemeManager {
 	public static void applySelectedTheme() {
 		try {
 			if (OS.getOS() == OS.LINUX) {
-				// We need to call this to enable the window decorations on Linux
 				if (!PreferencesManager.PREFERENCES.ui.useLinuxMenuBar.get()) {
 					JFrame.setDefaultLookAndFeelDecorated(true);
 					JDialog.setDefaultLookAndFeelDecorated(true);
