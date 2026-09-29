@@ -57,7 +57,7 @@ public class ThemeManager {
 	public static void applySelectedTheme() {
 		try {
 			if (OS.getOS() == OS.LINUX) {
-				if (!PreferencesManager.PREFERENCES.ui.useLinuxMenuBar.get()) {
+				if (!PreferencesManager.PREFERENCES.ui.useLinuxWindowDecorations.get()) {
 					JFrame.setDefaultLookAndFeelDecorated(true);
 					JDialog.setDefaultLookAndFeelDecorated(true);
 				}

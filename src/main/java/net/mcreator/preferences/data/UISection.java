@@ -36,7 +36,7 @@ public class UISection extends PreferencesSection {
 	public final ColorEntry interfaceAccentColor;
 	public final StringEntry backgroundSource;
 	public final BooleanEntry usemacOSMenuBar;
-	public final BooleanEntry useLinuxMenuBar;
+	public final BooleanEntry useLinuxWindowDecorations;
 	public final BooleanEntry nativeFileChooser;
 	public final BooleanEntry expandSectionsByDefault;
 	public final BooleanEntry autoReloadTabs;
@@ -50,7 +50,7 @@ public class UISection extends PreferencesSection {
 		backgroundSource = addEntry(
 				new StringEntry("backgroundSource", "All", "All", "Current theme", "Custom", "None"));
 		usemacOSMenuBar = addEntry(new BooleanEntry("useMacOSMenuBar", true));
-		useLinuxMenuBar = addEntry(new BooleanEntry("useLinuxMenuBar", true));
+		useLinuxWindowDecorations = addEntry(new BooleanEntry("useLinuxWindowDecorations", true));
 		nativeFileChooser = addEntry(new BooleanEntry("nativeFileChooser", true));
 		expandSectionsByDefault = addEntry(new BooleanEntry("expandSectionsByDefault", false));
 		autoReloadTabs = addEntry(new BooleanEntry("autoReloadTabs", true));
